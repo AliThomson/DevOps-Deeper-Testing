@@ -23,7 +23,7 @@ def driver():
         raise Exception(f"Browser {browser} is not supported. Please select one of chrome, firefox or safari")
 
 def test_chrome_open_google(driver):
-    driver.get("https://google.com")
+    driver.get("https://www.selenium.dev/documentation/")
 
     # handle cookie pop up
     try:
@@ -33,8 +33,14 @@ def test_chrome_open_google(driver):
         # continue onwards
         pass
     
+    search_box_button = driver.find_element(By.XPATH, '//button[@class="DocSearch DocSearch-Button"]')
+    search_box_button.click()
+    
     search_box = driver.find_element(By.XPATH, '//textarea')
     search_box.send_keys("Hey look, I'm using selenium!")
-    search_box.send_keys(Keys.RETURN)
+    # (Keys.RETURN)
+
+    first_link = driver.find_element(By.XPATH, '//div[@class="selenium-button-container"]/a[1]')
+    first_link.send_keys(Keys.RETURN)
 
     sleep(3)

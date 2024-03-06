@@ -1,0 +1,31 @@
+config:
+  target: https://www.artillery.io
+  phases:
+    - duration: 25
+      arrivalRate: 1
+      rampTo: 5
+      name: Warm up phase
+    - duration: 25
+      arrivalRate: 3
+      rampTo: 8
+      name: Ramp up load
+    - duration: 10
+      arrivalRate: 5
+      rampTo: 10
+      name: Spike phase
+  plugins:
+    ensure: {}
+    apdex: {}
+  apdex:
+    threshold: 100
+  ensure:
+      thresholds:
+        - http.response_time.p99: 100
+        - http.response_time.p95: 75
+  # Load the Playwright engine:
+  engines:
+    playwright: {}
+  # Path to JavaScript file that defines Playwright test functions
+  processor: "./flows.js"
+scenarios:
+  - engine: playwright
